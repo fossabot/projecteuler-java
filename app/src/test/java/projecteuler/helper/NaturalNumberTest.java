@@ -10,27 +10,58 @@ import org.junit.jupiter.api.Test;
  */
 public class NaturalNumberTest {
 
-  class TestInput {
+  class NaturalNumberDivisorsInput {
     public NaturalNumber input;
     public int[] answer;
     public int cycles;
 
-    TestInput(NaturalNumber input, int[] answer, int cycles) {
+    NaturalNumberDivisorsInput(NaturalNumber input, int[] answer, int cycles) {
       this.input = input;
       this.answer = answer;
       this.cycles = cycles;
     }
   }
 
-  @Test void divisors() {
-    TestInput[] tests = {
-      new TestInput(new NaturalNumber(1), new int[]{1}, 0),
-      new TestInput(new NaturalNumber(2), new int[]{1, 2}, 1),
-      new TestInput(new NaturalNumber(10), new int[]{1, 2, 5, 10}, 3),
-      new TestInput(new NaturalNumber(16), new int[]{1, 2, 4, 8, 16}, 4)
+  class NaturalNumberValueInput {
+    public NaturalNumber input;
+    public int answer;
+
+    NaturalNumberValueInput(NaturalNumber input, int answer) {
+      this.input = input;
+      this.answer = answer;
+    }
+  }
+
+  @Test void value() {
+    NaturalNumberValueInput[] tests = {
+      new NaturalNumberValueInput(new NaturalNumber(1), 1),
+      new NaturalNumberValueInput(new NaturalNumber(2), 2),
+      new NaturalNumberValueInput(new NaturalNumber(10), 10),
+      new NaturalNumberValueInput(new NaturalNumber(16), 16)
     };
 
-    for (TestInput testData : tests) {
+    for (NaturalNumberValueInput testData : tests) {
+      assertEquals(
+          testData.answer,
+          testData.input.get_value(),
+          String.format(
+              "NaturalNumber(%d).get_value() must be => %d",
+              testData.answer,
+              testData.answer
+          )
+      );
+    }
+  }
+
+  @Test void divisors() {
+    NaturalNumberDivisorsInput[] tests = {
+      new NaturalNumberDivisorsInput(new NaturalNumber(1), new int[]{1}, 0),
+      new NaturalNumberDivisorsInput(new NaturalNumber(2), new int[]{1, 2}, 1),
+      new NaturalNumberDivisorsInput(new NaturalNumber(10), new int[]{1, 2, 5, 10}, 3),
+      new NaturalNumberDivisorsInput(new NaturalNumber(16), new int[]{1, 2, 4, 8, 16}, 4)
+    };
+
+    for (NaturalNumberDivisorsInput testData : tests) {
       assertArrayEquals(
           testData.answer,
           testData.input.divisors(),
@@ -51,4 +82,5 @@ public class NaturalNumberTest {
       );
     }
   }
+
 }
